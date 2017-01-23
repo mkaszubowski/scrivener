@@ -6,12 +6,12 @@
 
 ## 1.2.1
 
-* Support Ecto `~> 1.1`
+* Support EctoOne `~> 1.1`
 
 ## 1.2.0
 
 * Implement Enumerable protocol for `Scrivener.Page`
-* Fix Ecto `1.0.x` compatiblity bug
+* Fix EctoOne `1.0.x` compatiblity bug
 
 ## 1.1.4
 

@@ -8,7 +8,7 @@ defmodule Scrivener.Mixfile do
       elixir: "~> 1.0",
       elixirc_paths: elixirc_paths(Mix.env),
       package: package,
-      description: "Paginate your Ecto queries",
+      description: "Paginate your EctoOne queries",
       deps: deps,
       docs: [
         main: Scrivener,
@@ -23,12 +23,12 @@ defmodule Scrivener.Mixfile do
     ]
   end
 
-  defp applications(:test), do: [:postgrex, :ecto, :logger]
+  defp applications(:test), do: [:postgrex, :ecto_one, :logger]
   defp applications(_), do: [:logger]
 
   defp deps do
     [
-      {:ecto, "~> 1.1"},
+      {:ecto_one, github: "mkaszubowski/ecto", branch: "ecto_one"},
       {:dialyze, "~> 0.2.0", only: :dev},
       {:earmark, ">= 0.0.0", only: :dev},
       {:ex_doc, "~> 0.11.0", only: :dev},

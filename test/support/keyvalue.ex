@@ -1,6 +1,6 @@
 defmodule Scrivener.KeyValue do
-  use Ecto.Model
-  import Ecto.Query
+  use EctoOne.Model
+  import EctoOne.Query
   @primary_key {:key, :string, autogenerate: false}
 
   schema "key_values" do

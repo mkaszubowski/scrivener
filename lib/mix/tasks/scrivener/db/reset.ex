@@ -6,8 +6,8 @@ defmodule Mix.Tasks.Scrivener.Db.Reset do
   def run(_args) do
     Logger.configure(level: :error)
 
-    Mix.Task.run("ecto.drop", [])
-    Mix.Task.run("ecto.create", [])
-    Mix.Task.run("ecto.migrate", [])
+    Mix.Task.run("ecto_one.drop", [])
+    Mix.Task.run("ecto_one.create", [])
+    Mix.Task.run("ecto_one.migrate", [])
   end
 end

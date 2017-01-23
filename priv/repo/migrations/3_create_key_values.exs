@@ -1,5 +1,5 @@
 defmodule TestRepo.Migrations.CreateKeyValues do
-  use Ecto.Migration
+  use EctoOne.Migration
 
   def change do
     create table(:key_values, primary_key: false) do

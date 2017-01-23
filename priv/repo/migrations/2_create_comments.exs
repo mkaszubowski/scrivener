@@ -1,5 +1,5 @@
 defmodule Scrivener.Repo.Migrations.CreateComments do
-  use Ecto.Migration
+  use EctoOne.Migration
 
   def change do
     create table(:comments) do

@@ -1,18 +1,18 @@
 defmodule Scrivener do
   @moduledoc """
-  Scrivener allows you to paginate your Ecto queries. It gives you useful information such as the total number of pages, the current page, and the current page's entries. It works nicely with Phoenix as well.
+  Scrivener allows you to paginate your EctoOne queries. It gives you useful information such as the total number of pages, the current page, and the current page's entries. It works nicely with Phoenix as well.
 
-  First, you'll want to `use` Scrivener in your application's Repo. This will add a `paginate` function to your Repo. This `paginate` function expects to be called with, at a minimum, an Ecto query. It will then paginate the query and execute it, returning a `Scrivener.Page`. Defaults for `page_size` can be configued when you `use` Scrivener. If no `page_size` is provided, Scrivener will use `10` by default.
+  First, you'll want to `use` Scrivener in your application's Repo. This will add a `paginate` function to your Repo. This `paginate` function expects to be called with, at a minimum, an EctoOne query. It will then paginate the query and execute it, returning a `Scrivener.Page`. Defaults for `page_size` can be configued when you `use` Scrivener. If no `page_size` is provided, Scrivener will use `10` by default.
 
   You may also want to call `paginate` with a params map along with your query. If provided with a params map, Scrivener will use the values in the keys `"page"` and `"page_size"` before using any configured defaults.
 
       defmodule MyApp.Repo do
-        use Ecto.Repo, otp_app: :my_app
+        use EctoOne.Repo, otp_app: :my_app
         use Scrivener, page_size: 10, max_page_size: 100
       end
 
       defmodule MyApp.Person do
-        use Ecto.Model
+        use EctoOne.Model
 
         schema "people" do
           field :name, :string
@@ -44,35 +44,35 @@ defmodule Scrivener do
       |> MyApp.Repo.paginate(page: 2, page_size: 5)
   """
 
-  import Ecto.Query
+  import EctoOne.Query
 
   alias Scrivener.Config
   alias Scrivener.Page
 
   @doc """
-  Scrivener is meant to be `use`d by an Ecto repository.
+  Scrivener is meant to be `use`d by an EctoOne repository.
 
   When `use`d, an optional default for `page_size` can be provided. If `page_size` is not provided a default of 10 will be used.
 
   A `max_page_size` can also optionally can be provided. This enforces a hard ceiling for the page size, even if you allow users of your application to specify `page_size` via query parameters. If not provided, there will be no limit to page size.
 
       defmodule MyApp.Repo do
-        use Ecto.Repo, ...
+        use EctoOne.Repo, ...
         use Scrivener
       end
 
       defmodule MyApp.Repo do
-        use Ecto.Repo, ...
+        use EctoOne.Repo, ...
         use Scrivener, page_size: 5, max_page_size: 100
       end
 
-    When `use` is called, a `paginate` function is defined in the Ecto repo. See the `paginate` documentation for more information.
+    When `use` is called, a `paginate` function is defined in the EctoOne repo. See the `paginate` documentation for more information.
   """
   defmacro __using__(opts) do
     quote do
       @scrivener_defaults unquote(opts)
 
-      @spec paginate(Ecto.Query.t, map | Keyword.t) :: Scrivener.Page.t
+      @spec paginate(EctoOne.Query.t, map | Keyword.t) :: Scrivener.Page.t
       def paginate(query, options \\ []) do
         Scrivener.paginate(__MODULE__, @scrivener_defaults, query, options)
       end
@@ -92,9 +92,9 @@ defmodule Scrivener do
       |> where([m], m.field == "value")
       |> Scrivener.paginate(config)
   """
-  @spec paginate(Ecto.Query.t, Scrivener.Config.t) :: Scrivener.Page.t
+  @spec paginate(EctoOne.Query.t, Scrivener.Config.t) :: Scrivener.Page.t
   def paginate(query, %Config{page_size: page_size, page_number: page_number, repo: repo}) do
-    query = Ecto.Queryable.to_query(query)
+    query = EctoOne.Queryable.to_query(query)
     total_entries = total_entries(query, repo)
 
     %Page{
@@ -110,7 +110,7 @@ defmodule Scrivener do
   This method is not meant to be called directly, but rather will be delegated to by calling `paginate/2` on the repository that `use`s Scrivener.
 
       defmodule MyApp.Repo do
-        use Ecto.Repo, ...
+        use EctoOne.Repo, ...
         use Scrivener
       end
 
@@ -124,7 +124,7 @@ defmodule Scrivener do
 
   The ability to call paginate with a map with string key/values is convenient because you can pass your Phoenix params map to paginate.
   """
-  @spec paginate(Ecto.Repo.t, Keyword.t, Ecto.Query.t, map | Keyword.t) :: Scrivener.Page.t
+  @spec paginate(EctoOne.Repo.t, Keyword.t, EctoOne.Query.t, map | Keyword.t) :: Scrivener.Page.t
   def paginate(repo, defaults, query, opts) do
     paginate(query, Config.new(repo, defaults, opts))
   end

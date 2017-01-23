@@ -1,5 +1,5 @@
 defmodule Scrivener.Comment do
-  use Ecto.Model
+  use EctoOne.Model
 
   schema "comments" do
     field :body, :string

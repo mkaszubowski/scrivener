@@ -1,5 +1,5 @@
 defmodule TestRepo.Migrations.CreatePosts do
-  use Ecto.Migration
+  use EctoOne.Migration
 
   def change do
     create table(:posts) do

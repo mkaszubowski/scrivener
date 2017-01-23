@@ -1,5 +1,5 @@
 defmodule Scrivener.Repo.Migrations.AddAuthors do
-  use Ecto.Migration
+  use EctoOne.Migration
 
   def change do
     create table(:authors) do

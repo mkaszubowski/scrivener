@@ -1,6 +1,6 @@
 defmodule Scrivener.Post do
-  use Ecto.Model
-  import Ecto.Query
+  use EctoOne.Model
+  import EctoOne.Query
 
   schema "posts" do
     field :title, :string
