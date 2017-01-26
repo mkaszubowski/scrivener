@@ -7,9 +7,9 @@ defmodule Scrivener.Mixfile do
       version: "1.2.2",
       elixir: "~> 1.0",
       elixirc_paths: elixirc_paths(Mix.env),
-      package: package,
+      package: package(),
       description: "Paginate your EctoOne queries",
-      deps: deps,
+      deps: deps(),
       docs: [
         main: Scrivener,
         readme: "README.md"
